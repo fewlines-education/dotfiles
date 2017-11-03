@@ -1,0 +1,18 @@
+#!/bin/bash
+
+function ask {
+  gitKey=${1}
+  sentence=${2}
+
+  if [ -z "$(git config --get ${gitKey})" ]; then
+    echo ${sentence}
+    read answer
+
+    git config --global --replace-all ${gitKey} "${answer}"
+
+    ask ${gitKey} "${sentence}"
+  fi
+}
+
+ask user.email "What's your email? Be sure to use the same as the one you used to register on GitHub"
+ask user.name "What's your first and last name?"

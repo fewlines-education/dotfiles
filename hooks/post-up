@@ -1,5 +1,31 @@
 #!/bin/bash
 
+function configureGit {
+  setKey user.email "${EMAIL}" "Email must be set when running the script"
+  setKey user.name "${NAME}" "Name must be set when running the script"
+}
+
+function installBrew {
+  brewPath=${HOME}/.Brewfile
+
+  if [ -e "${brewPath}" ]; then
+    brew bundle --file=${brewPath}
+  else
+    echo "Brewfile not found."
+  fi
+}
+
+function installZSH {
+  zprestoPath=~/.zpresto
+  if [ ! -d "${zprestoPath}" ]; then
+    git clone --recursive git@github.com:sorin-ionescu/prezto.git "${HOME}/.zprezto" && chsh -s /bin/zsh
+
+    if ! $?; then
+      echo "ZSH and ZPresto not installed properly"
+    fi
+  fi
+}
+
 function setKey {
   gitKey=${1}
   newValue=${2}
@@ -15,5 +41,8 @@ function setKey {
   fi
 }
 
-setKey user.email "${EMAIL}" "Email must be set when running the script"
-setKey user.name "${NAME}" "Name must be set when running the script"
+configureGit
+
+installBrew
+
+installZSH

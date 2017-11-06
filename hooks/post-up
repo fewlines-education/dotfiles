@@ -1,18 +1,19 @@
 #!/bin/bash
 
-function ask {
+function setKey {
   gitKey=${1}
-  sentence=${2}
+  newValue=${2}
+  errorMessage=${3}
+  currentValue=$(git config --get ${gitKey})
 
-  if [ -z "$(git config --get ${gitKey})" ]; then
-    echo ${sentence}
-    read answer
-
-    git config --global --replace-all ${gitKey} "${answer}"
-
-    ask ${gitKey} "${sentence}"
+  if [ -z "${currentValue}" -a -z "${newValue}" ]; then
+    echo "${errorMessage}"
+    echo "EMAIL=\"YOU_EMAIL@COMPANY.COM\" NAME=\"FIRSTNAME LASTNAME\" rcup -f -d ~/Workspace/dotfiles"
+    exit 1
+  elif [ -n "${newValue}" ]; then
+    git config --global --replace-all "${gitKey}" "${newValue}"
   fi
 }
 
-ask user.email "What's your email? Be sure to use the same as the one you used to register on GitHub"
-ask user.name "What's your first and last name?"
+setKey user.email "${EMAIL}" "Email must be set when running the script"
+setKey user.name "${NAME}" "Name must be set when running the script"

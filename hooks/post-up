@@ -16,10 +16,9 @@ function configureShell {
 function installBrew {
   brewPath=${HOME}/.Brewfile
 
-  if [ -e "${brewPath}" ]; then
+ 
+  if [ -e "${brewPath}" ] && ! brew bundle check --file="${brewPath}" > /dev/null; then
     brew bundle --file=${brewPath}
-  else
-    echo "Brewfile not found."
   fi
 }
 

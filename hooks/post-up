@@ -5,6 +5,14 @@ function configureGit {
   setKey user.name "${NAME}" "Name must be set when running the script"
 }
 
+function configureShell {
+  expectedShell=/bin/zsh
+
+  if [ "${SHELL}" != "${expectedShell}" ]; then
+    chsh -s ${expectedShell}
+  fi
+}
+
 function installBrew {
   brewPath=${HOME}/.Brewfile
 
@@ -15,14 +23,15 @@ function installBrew {
   fi
 }
 
-function installZSH {
-  zprestoPath=~/.zpresto
-  if [ ! -d "${zprestoPath}" ]; then
-    git clone --recursive git@github.com:sorin-ionescu/prezto.git "${HOME}/.zprezto" && chsh -s /bin/zsh
+function installZPresto {
+  zpreztoPath=~/.zprezto
 
-    if ! $?; then
-      echo "ZSH and ZPresto not installed properly"
-    fi
+  if [ ! -d "${zpreztoPath}" ]; then
+    git clone --recursive git@github.com:sorin-ionescu/prezto.git ${zpreztoPath}
+
+    for file in $(ls ${zpreztoPath}/runcoms/ | grep -ve README -ve zshrc); do
+      ln -f -s ${zpreztoPath}/runcoms/${file} ~/.${file}
+    done
   fi
 }
 
@@ -41,8 +50,10 @@ function setKey {
   fi
 }
 
-configureGit
-
 installBrew
 
-installZSH
+configureShell
+
+configureGit
+
+installZPresto

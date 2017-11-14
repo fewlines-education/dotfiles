@@ -16,13 +16,18 @@ function configureShell {
 function installBrew {
   brewPath=${HOME}/.Brewfile
 
- 
   if [ -e "${brewPath}" ] && ! brew bundle check --file="${brewPath}" > /dev/null; then
     brew bundle --file=${brewPath}
   fi
 }
 
-function installZPresto {
+function installNodePackages {
+  if ! npm list --global=true --depth=0 --parseable | grep jest &> /dev/null; then
+    npm install --global jest
+  fi
+}
+
+function installZPrezto {
   zpreztoPath=~/.zprezto
 
   if [ ! -d "${zpreztoPath}" ]; then
@@ -55,4 +60,6 @@ configureShell
 
 configureGit
 
-installZPresto
+installNodePackages
+
+installZPrezto

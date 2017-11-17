@@ -29,10 +29,25 @@ function installBrew {
   fi
 }
 
+function installAtomPackages {
+  packages="busy-signal editorconfig highlight-nbsp highlight-selected intentions language-dotfiles"
+  packages="${packages} language-nunjucks linter linter-eslint linter-ui-default prettier-atom sort-lines"
+
+  for package in ${packages}; do
+    if ! apm list --installed --bare | grep ${package} &> /dev/null; then
+      apm install ${package}
+    fi
+  done
+}
+
 function installNodePackages {
-  if ! npm list --global=true --depth=0 --parseable | grep jest &> /dev/null; then
-    npm install --global jest
-  fi
+  packages="eslint jest prettier"
+
+  for package in ${packages}; do
+    if ! npm list --global=true --depth=0 --parseable | grep ${package} &> /dev/null; then
+      npm install --global ${package}
+    fi
+  done
 }
 
 function installSparta {
@@ -80,5 +95,7 @@ configureGit
 installNodePackages
 
 installZPrezto
+
+installAtomPackages
 
 installSparta

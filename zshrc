@@ -3,12 +3,13 @@ if yarn --help &> /dev/null; then
   PATH="${PATH}:$(yarn global bin)"
 fi
 
-export PATH
 export EDITOR=atom
 export GIT_EDITOR=atom
-export LC_ALL=en_US.UTF-8
-export TERM=xterm-256color
 export HOMEBREW_BREWFILE=$HOME/.brewfile
+export LC_ALL=en_US.UTF-8
+export PATH
+export SPARTA_GITHUB_WEBHOOK="ws://sparta.fewlines.co/socket"
+export TERM=xterm-256color
 
 if [ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"

@@ -13,6 +13,14 @@ function configureShell {
   fi
 }
 
+function errorMessage {
+  key=${1}
+
+  echo "${key} must be set when running the script"
+  echo "SPARTA_API_KEY=\"YOUR-KEY\" EMAIL=\"YOU_EMAIL@COMPANY.COM\" NAME=\"FIRSTNAME LASTNAME\" rcup -f -d ~/Workspace/dotfiles"
+  exit 1
+}
+
 function installBrew {
   brewPath=${HOME}/.Brewfile
 
@@ -24,6 +32,17 @@ function installBrew {
 function installNodePackages {
   if ! npm list --global=true --depth=0 --parseable | grep jest &> /dev/null; then
     npm install --global jest
+  fi
+}
+
+function installSparta {
+  zshFile=${HOME}/.zshrc
+
+  if ! grep SPARTA_API_KEY ${zshFile} &> /dev/null && [ -z "${SPARTA_API_KEY}" ]; then
+    errorMessage "Sparta API Key"
+  elif [ -n "${SPARTA_API_KEY}" ]; then
+    sed -i -e '/export SPARTA_API_KEY.*/d' ${zshFile}
+    echo "export SPARTA_API_KEY=\"${SPARTA_API_KEY}\"" >> ${zshFile}
   fi
 }
 
@@ -46,9 +65,7 @@ function setKey {
   currentValue=$(git config --get ${gitKey})
 
   if [ -z "${currentValue}" -a -z "${newValue}" ]; then
-    echo "${errorMessage}"
-    echo "EMAIL=\"YOU_EMAIL@COMPANY.COM\" NAME=\"FIRSTNAME LASTNAME\" rcup -f -d ~/Workspace/dotfiles"
-    exit 1
+    errorMessage ${gitKey}
   elif [ -n "${newValue}" ]; then
     git config --global --replace-all "${gitKey}" "${newValue}"
   fi
@@ -63,3 +80,5 @@ configureGit
 installNodePackages
 
 installZPrezto
+
+installSparta

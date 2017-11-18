@@ -16,6 +16,10 @@
 
   prune = true
 
+[init]
+
+  templatedir = ~/.git_template
+
 [grep]
 
   extendRegexp = true

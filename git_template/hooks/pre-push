@@ -1,0 +1,10 @@
+#!/bin/bash
+
+scriptName=customTesting.js
+
+if [ -e ${scriptName} ]; then
+  echo -n "Sending test results to Sparta Server..."
+  npm test &> /dev/null
+  echo "✓"
+fi
+exit 0

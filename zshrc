@@ -15,6 +15,10 @@ if [ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
+if [ -f ~/.zshrc.private ]; then
+  source ${HOME}/.zshrc.private
+fi
+
 # Override zprezto configuration
 alias cp='nocorrect cp'
 alias ln='nocorrect ln'

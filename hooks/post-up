@@ -51,11 +51,12 @@ function installNodePackages {
 }
 
 function installSparta {
-  zshFile=${HOME}/.zshrc
+  zshFile=${HOME}/.zshrc.private
 
   if ! grep SPARTA_API_KEY ${zshFile} &> /dev/null && [ -z "${SPARTA_API_KEY}" ]; then
     errorMessage "Sparta API Key"
   elif [ -n "${SPARTA_API_KEY}" ]; then
+    touch ${zshFile}
     sed -i -e '/export SPARTA_API_KEY.*/d' ${zshFile}
     echo "export SPARTA_API_KEY=\"${SPARTA_API_KEY}\"" >> ${zshFile}
   fi

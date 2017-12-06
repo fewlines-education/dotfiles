@@ -57,7 +57,7 @@ function installSparta {
     errorMessage "Sparta API Key"
   elif [ -n "${SPARTA_API_KEY}" ]; then
     touch ${zshFile}
-    sed -i -e '/export SPARTA_API_KEY.*/d' ${zshFile}
+    sed -i '' -e '/export SPARTA_API_KEY.*/d' ${zshFile}
     echo "export SPARTA_API_KEY=\"${SPARTA_API_KEY}\"" >> ${zshFile}
   fi
 }

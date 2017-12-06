@@ -4,7 +4,7 @@ if yarn --help &> /dev/null; then
 fi
 
 export EDITOR=atom
-export GIT_EDITOR=atom
+export GIT_EDITOR="atom --wait"
 export HOMEBREW_BREWFILE=$HOME/.brewfile
 export LC_ALL=en_US.UTF-8
 export PATH

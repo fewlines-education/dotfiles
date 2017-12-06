@@ -5,6 +5,7 @@ tap "thoughtbot/formulae"
 
 brew "git"
 brew "heroku"
+brew "jq"
 brew "node"
 brew "postgresql"
 brew "thoughtbot/formulae/rcm"

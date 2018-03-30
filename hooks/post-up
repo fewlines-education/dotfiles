@@ -38,6 +38,12 @@ function installAtomPackages {
       apm install ${package}
     fi
   done
+
+  disabled_packages="linter-eslint"
+
+  for package in ${disabled_packages}; do
+    apm disable ${package}
+  done
 }
 
 function installNodePackages {

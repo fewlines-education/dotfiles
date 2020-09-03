@@ -1,29 +1,29 @@
-PATH="/usr/local/bin:${PATH}"
-if yarn --help &> /dev/null; then
-  PATH="${PATH}:$(yarn global bin)"
-fi
+setopt EXTENDED_HISTORY
+setopt INC_APPEND_HISTORY
+setopt SHARE_HISTORY
 
-export EDITOR=atom
-export GIT_EDITOR="atom --wait"
-export HOMEBREW_BREWFILE=$HOME/.brewfile
-export LC_ALL=en_US.UTF-8
-export PATH
-export SPARTA_GITHUB_WEBHOOK="ws://sparta.fewlines.co/socket"
-export TERM=xterm-256color
+bindkey -e
+autoload -U edit-command-line;
+zle -N edit-command-line;
+bindkey '^F' edit-command-line # Edit current line with C-f
+bindkey '^[[1;9D' backward-word # Alt-Left
+bindkey '^[[1;9C' forward-word # Alt-Right
+bindkey '^[[3~' delete-char # Delete
+bindkey '^[[Z' reverse-menu-complete # Ctrl-r
+bindkey '^[[A' up-line-or-search # Arrow up
+bindkey '^[[B' down-line-or-search # Arrow down
 
-if [ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
-fi
+autoload -Uz vcs_info
+precmd() { vcs_info }
+zstyle ':vcs_info:git:*' formats '[git] %b'
+setopt PROMPT_SUBST
+export PROMPT='%F{235}%B%c%b%f ${vcs_info_msg_0_} %(?.%F{24}❯%f.%F{198}❯%f) '
 
-if [ -f ~/.zshrc.private ]; then
-  source ${HOME}/.zshrc.private
-fi
+source ${HOME}/.zsh/zaliases
+source ${HOME}/.zsh/zcompletion
 
-# Override zprezto configuration
-alias cp='nocorrect cp'
-alias ln='nocorrect ln'
-alias mv='nocorrect mv'
-alias rm='nocorrect rm'
-setopt CLOBBER
+[[ -r ${HOME}/.zshrc.local ]] && source ${HOME}/.zshrc.local
+[[ -r ${HOME}/.asdf/asdf.sh ]] && source ${HOME}/.asdf/asdf.sh
+[[ -r ${HOME}/.config/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] && source ${HOME}/.config/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-alias serve="ruby -run -e httpd . -p 8000"
+current_tt

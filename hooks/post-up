@@ -32,20 +32,21 @@ function installNodePackages {
 }
 
 function installVSCodePackage {
-  packages="busy-signal editorconfig highlight-nbsp highlight-selected intentions language-dotfiles"
-  packages="${packages} language-nunjucks linter linter-eslint linter-ui-default prettier-atom sort-lines"
+  code --install-extension dbaeumer.vscode-eslint
+  code --install-extension esbenp.prettier-vscode
+}
 
-  for package in ${packages}; do
-    if ! apm list --installed --bare | grep ${package} &> /dev/null; then
-      apm install ${package}
-    fi
-  done
+function setKey {
+  gitKey=${1}
+  newValue=${2}
+  errorMessage=${3}
+  currentValue=$(git config --get ${gitKey})
 
-  disabled_packages="linter-eslint"
-
-  for package in ${disabled_packages}; do
-    apm disable ${package}
-  done
+  if [ -z "${currentValue}" -a -z "${newValue}" ]; then
+    errorMessage ${gitKey}
+  elif [ -n "${newValue}" ]; then
+    git config --global --replace-all "${gitKey}" "${newValue}"
+  fi
 }
 
 configureGit

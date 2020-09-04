@@ -1,24 +1,11 @@
 #!/bin/bash
 
-function configureGit {
-  setKey user.email "${EMAIL}" "Email must be set when running the script"
-  setKey user.name "${NAME}" "Name must be set when running the script"
-}
-
 function configureShell {
   expectedShell=/bin/zsh
 
   if [ "${SHELL}" != "${expectedShell}" ]; then
     chsh -s ${expectedShell}
   fi
-}
-
-function errorMessage {
-  key=${1}
-
-  echo "${key} must be set when running the script"
-  echo "SPARTA_API_KEY=\"YOUR-KEY\" EMAIL=\"YOU_EMAIL@COMPANY.COM\" NAME=\"FIRSTNAME LASTNAME\" rcup -f -d ~/Workspace/dotfiles"
-  exit 1
 }
 
 function installBrew {
@@ -44,20 +31,6 @@ function installVSCodePackage {
   code --install-extension esbenp.prettier-vscode
 }
 
-function setKey {
-  gitKey=${1}
-  newValue=${2}
-  errorMessage=${3}
-  currentValue=$(git config --get ${gitKey})
-
-  if [ -z "${currentValue}" -a -z "${newValue}" ]; then
-    errorMessage ${gitKey}
-  elif [ -n "${newValue}" ]; then
-    git config --global --replace-all "${gitKey}" "${newValue}"
-  fi
-}
-
-configureGit
 configureShell
 installBrew
 installNodePackages

@@ -15,9 +15,9 @@ bindkey '^[[B' down-line-or-search # Arrow down
 
 autoload -Uz vcs_info
 precmd() { vcs_info }
-zstyle ':vcs_info:git:*' formats '[git] %b'
+zstyle ':vcs_info:git:*' formats '[branch] %b'
 setopt PROMPT_SUBST
-export PROMPT='%F{235}%B%c%b%f ${vcs_info_msg_0_} %(?.%F{24}❯%f.%F{198}❯%f) '
+export PROMPT='%B%c%b%f ${vcs_info_msg_0_} %(?.%F{24}❯%f.%F{198}❯%f) '
 
 source ${HOME}/.zsh/zaliases
 source ${HOME}/.zsh/zcompletion

@@ -8,6 +8,11 @@ function configureShell {
   fi
 }
 
+function fixPermissions {
+  compaudit | xargs chown -R "$(whoami)"
+  compaudit | xargs chmod go-w
+}
+
 function installBrew {
   brewPath=${HOME}/.Brewfile
 
@@ -35,3 +40,4 @@ configureShell
 installBrew
 installNodePackages
 installVSCodePackage
+fixPermissions

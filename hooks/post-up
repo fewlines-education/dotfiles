@@ -13,6 +13,14 @@ function configureShell {
   fi
 }
 
+function errorMessage {
+  key=${1}
+
+  echo "${key} must be set when running the script"
+  echo "SPARTA_API_KEY=\"YOUR-KEY\" EMAIL=\"YOU_EMAIL@COMPANY.COM\" NAME=\"FIRSTNAME LASTNAME\" rcup -f -d ~/Workspace/dotfiles"
+  exit 1
+}
+
 function installBrew {
   brewPath=${HOME}/.Brewfile
 

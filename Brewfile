@@ -13,7 +13,7 @@ brew "node"
 brew "postgresql"
 brew "thoughtbot/formulae/rcm"
 
-cask "docker-edge"
+cask "docker"
 cask "google-chrome"
 cask "iterm2"
 cask "mongodb-compass"

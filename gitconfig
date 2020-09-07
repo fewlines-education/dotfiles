@@ -1,34 +1,26 @@
 [color]
-
   diff = true
   ui = true
 
 [color "diff"]
-
   whitespace = red
 
 [core]
-
   excludesfile = ~/.gitignore
   pager = less -F -X
 
 [fetch]
-
   prune = true
 
 [init]
-
   templatedir = ~/.git_template
 
 [grep]
-
   extendRegexp = true
   lineNumber = true
 
 [push]
-
   default = current
 
 [user]
-
   useconfigonly = true

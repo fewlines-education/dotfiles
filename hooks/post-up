@@ -1,10 +1,5 @@
 #!/bin/bash
 
-function configureGit {
-  setKey user.email "${EMAIL}" "Email must be set when running the script"
-  setKey user.name "${NAME}" "Name must be set when running the script"
-}
-
 function configureShell {
   expectedShell=/bin/zsh
 
@@ -13,37 +8,12 @@ function configureShell {
   fi
 }
 
-function errorMessage {
-  key=${1}
-
-  echo "${key} must be set when running the script"
-  echo "SPARTA_API_KEY=\"YOUR-KEY\" EMAIL=\"YOU_EMAIL@COMPANY.COM\" NAME=\"FIRSTNAME LASTNAME\" rcup -f -d ~/Workspace/dotfiles"
-  exit 1
-}
-
 function installBrew {
   brewPath=${HOME}/.Brewfile
 
   if [ -e "${brewPath}" ] && ! brew bundle check --file="${brewPath}" > /dev/null; then
     brew bundle --file=${brewPath}
   fi
-}
-
-function installAtomPackages {
-  packages="busy-signal editorconfig highlight-nbsp highlight-selected intentions language-dotfiles"
-  packages="${packages} language-nunjucks linter linter-eslint linter-ui-default prettier-atom sort-lines"
-
-  for package in ${packages}; do
-    if ! apm list --installed --bare | grep ${package} &> /dev/null; then
-      apm install ${package}
-    fi
-  done
-
-  disabled_packages="linter-eslint"
-
-  for package in ${disabled_packages}; do
-    apm disable ${package}
-  done
 }
 
 function installNodePackages {
@@ -56,53 +26,12 @@ function installNodePackages {
   done
 }
 
-function installSparta {
-  zshFile=${HOME}/.zshrc.private
-
-  if ! grep SPARTA_API_KEY ${zshFile} &> /dev/null && [ -z "${SPARTA_API_KEY}" ]; then
-    errorMessage "Sparta API Key"
-  elif [ -n "${SPARTA_API_KEY}" ]; then
-    touch ${zshFile}
-    sed -i '' -e '/export SPARTA_API_KEY.*/d' ${zshFile}
-    echo "export SPARTA_API_KEY=\"${SPARTA_API_KEY}\"" >> ${zshFile}
-  fi
+function installVSCodePackage {
+  code --install-extension dbaeumer.vscode-eslint
+  code --install-extension esbenp.prettier-vscode
 }
-
-function installZPrezto {
-  zpreztoPath=~/.zprezto
-
-  if [ ! -d "${zpreztoPath}" ]; then
-    git clone --recursive git@github.com:sorin-ionescu/prezto.git ${zpreztoPath}
-
-    for file in $(ls ${zpreztoPath}/runcoms/ | grep -ve README -ve zshrc); do
-      ln -f -s ${zpreztoPath}/runcoms/${file} ~/.${file}
-    done
-  fi
-}
-
-function setKey {
-  gitKey=${1}
-  newValue=${2}
-  errorMessage=${3}
-  currentValue=$(git config --get ${gitKey})
-
-  if [ -z "${currentValue}" -a -z "${newValue}" ]; then
-    errorMessage ${gitKey}
-  elif [ -n "${newValue}" ]; then
-    git config --global --replace-all "${gitKey}" "${newValue}"
-  fi
-}
-
-installBrew
 
 configureShell
-
-configureGit
-
+installBrew
 installNodePackages
-
-installZPrezto
-
-installAtomPackages
-
-installSparta
+installVSCodePackage

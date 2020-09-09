@@ -7,13 +7,13 @@ Just a basic dotfiles repository
 Install Homebrew then run:
 
 ```sh
-brew bundle --file=~/Workspace/<YOUR_GITHUB_USERNAME>/dotfiles/Brewfile
+brew bundle --file=~/Workspace/dotfiles/Brewfile
 ```
 
 Link dotfiles:
 
 ```sh
-rcup -d ~/Workspace/<YOUR_GITHUB_USERNAME>/dotfiles
+rcup -d ~/Workspace/dotfiles
 ```
 
 Change shell to use `zsh`:

@@ -6,6 +6,7 @@ tap "mongodb/brew"
 tap "thoughtbot/formulae"
 
 brew "git"
+brew "gnupg"
 brew "heroku/brew/heroku"
 brew "jq"
 brew "mongodb/brew/mongodb-community-shell"

@@ -11,6 +11,7 @@ brew "heroku/brew/heroku"
 brew "jq"
 brew "node"
 brew "thoughtbot/formulae/rcm"
+brew "coreutils"
 brew "sparta-cli"
 
 cask "google-chrome"

@@ -35,6 +35,12 @@ Install `asdf`:
 git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.7.8
 ```
 
+Reload your config to add `asdf` to the list of your available commands:
+
+```sh
+source ~/.zshrc
+```
+
 Install the required asdf plugins:
 
 ```sh

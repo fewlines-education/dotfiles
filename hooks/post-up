@@ -16,16 +16,6 @@ function installBrew {
   fi
 }
 
-function installNodePackages {
-  packages="eslint jest prettier"
-
-  for package in ${packages}; do
-    if ! npm list --global=true --depth=0 --parseable | grep ${package} &> /dev/null; then
-      npm install --global ${package}
-    fi
-  done
-}
-
 function installVSCodePackage {
   code --install-extension dbaeumer.vscode-eslint
   code --install-extension esbenp.prettier-vscode
@@ -33,5 +23,4 @@ function installVSCodePackage {
 
 configureShell
 installBrew
-installNodePackages
 installVSCodePackage

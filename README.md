@@ -16,11 +16,7 @@ Link dotfiles:
 rcup -d ~/Workspace/dotfiles
 ```
 
-Change shell to use `zsh`:
-
-```sh
-chsh -s /bin/zsh
-```
+Open iTerm
 
 If you run into a warning with `compaudit`, fix permissions with:
 

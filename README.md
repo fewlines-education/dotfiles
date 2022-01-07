@@ -4,7 +4,17 @@ Just a basic dotfiles repository
 
 ## Usage
 
+Open Terminal
+
 Install [Homebrew](https://brew.sh) then run:
+
+```sh
+mkdir ~/Workspace
+```
+
+```sh
+git clone git@github.com:fewlines-education/dotfiles.git ~/Workspace/dotfiles
+```
 
 ```sh
 brew bundle --file=~/Workspace/dotfiles/Brewfile

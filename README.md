@@ -13,7 +13,7 @@ mkdir ~/Workspace
 ```
 
 ```sh
-git clone git@github.com:fewlines-education/dotfiles.git ~/Workspace/dotfiles
+git clone https://github.com/fewlines-education/dotfiles.git ~/Workspace/dotfiles
 ```
 
 ```sh
